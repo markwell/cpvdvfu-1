@@ -2,7 +2,6 @@
 include_once $_SERVER['DOCUMENT_ROOT']."/cpvdvfu/system/bd.php";	
 	function checkAndAuthUser($login, $password)
 	{
-
 		function generateCode($length = 6)
 		{
 		    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIFJKLMNOPRQSTUVWXYZ0123456789";
@@ -17,8 +16,8 @@ include_once $_SERVER['DOCUMENT_ROOT']."/cpvdvfu/system/bd.php";
 	    # Вытаскиваем из БД запись, у которой логин равняеться введенному
 	    $password = md5($password);//шифруем пароль
 
-	    $volunteer = mysql_query("SELECT VolunteerID, Password FROM Volunteers WHERE Email='$login'");
-	    $data = mysql_fetch_array($volunteer);
+	    $query = mysql_query("SELECT VolunteerID, Password FROM Volunteers WHERE Email='$login'");
+	    $data = mysql_fetch_array($query);
 
 	    $ID = $data['VolunteerID'];
 	    
@@ -32,9 +31,10 @@ include_once $_SERVER['DOCUMENT_ROOT']."/cpvdvfu/system/bd.php";
            	$result = mysql_query($query);
 
 	        # Ставим куки
-	        setcookie("id", $ID, time() + 60 * 60 * 24 * 30);
-	        setcookie("hash", $hash, time() + 60 * 60 * 24 * 30);
-	        setcookie("username", $login, time() + 60 * 60 * 24 * 30);
+	        setcookie("id", $ID, time() + 60 * 60 * 24 * 30, "/", "localhost"); //аргумент "localhost" говорит нам что кукисы будут сохранятся в домене localhost
+	        setcookie("hash", $hash, time() + 60 * 60 * 24 * 30, "/", "localhost");
+	        setcookie("username", $login, time() + 60 * 60 * 24 * 30, "/", "localhost");
+
 	        return null;
 	    } else {
 	        
@@ -47,9 +47,9 @@ include_once $_SERVER['DOCUMENT_ROOT']."/cpvdvfu/system/bd.php";
 	{
 	    if (isset($_POST['submitlogin'])) {
 	    	
-	        $error = checkAndAuthUser(mb_strtolower(trim($_POST['email'])), $_POST['password']);
+	        $error = checkAndAuthUser(trim($_POST['email']), $_POST['password']);
 	        if (is_null($error)) {
-	            header('Location:/cpvdvfu/users/checkUserVolonteer.php'); //ссылка на страницу проверки пользователя
+	            header('Location:/cpvdvfu/users/volunteers/checkUserVolunteer.php'); //ссылка на страницу проверки пользователя
 	        } else {
 				echo $error;
 	        }

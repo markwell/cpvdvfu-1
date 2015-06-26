@@ -9,16 +9,17 @@
 			<article class='clear-after'>
 			<div class='column three'>
 			<!-- $array[Name]<br><a href='events.php?id=$array[ActivityID]'></a><br><br -->
-				<figure><img src='./events/img/$array[ActivityID].jpg' alt=''></figure>
+				<figure><img src='./events/images/$array[ActivityID].jpg' alt=''></figure>
 			</div><!-- column three -->
 			<div class='column nine last'>
 				<h2><a href='index.php?events?id=$array[ActivityID]'>$array[Name]</a></h2>
 				<h5 class='meta-post'><time DateTimeStart='$array[DateTimeStart]'>$array[DateTimeStart]</time> - <time DateTimeEnd='$array[DateTimeEnd]'>$array[DateTimeEnd]</time></h5>
-				<p>$array[Description]</p>	
-			</div><!-- column nine -->
+				<p>$array[Description]</p>
+			</div><!-- column nine --><br><br>
+			<!-- ----------------------------------------------------------------------------- -->
 			</article>
 		");
 	}
 	while ($array = mysql_fetch_array($result));
-	
 ?>
+<!-- index.php?events?id=1 event/1 -->

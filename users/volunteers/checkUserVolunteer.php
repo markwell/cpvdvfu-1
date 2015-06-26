@@ -9,14 +9,14 @@
     function checkUser()
     {
         $userdata = getHashAndID(intval($_COOKIE['id']));
-        
         if (isset($_COOKIE['id']) and isset($_COOKIE['hash'])) {
             if (($userdata['Hash'] !== $_COOKIE['hash']) or ($userdata['VolunteerID'] !== $_COOKIE['id'])) {
-                setcookie("id", "", time() - 3600*24*30*12, "/");
-                setcookie("username", "", time() - 3600*24*30*12, "/");
-                setcookie("hash", "", time() - 3600*24*30*12, "/");
+                setcookie("id", "", time() - 3600*24*30*12, "/", "localhost");
+                setcookie("username", "", time() - 3600*24*30*12, "/", "localhost");
+                setcookie("hash", "", time() - 3600*24*30*12, "/", "localhost");
                 $message = "Авторизуйтесь пожалуйста.";
             } else {
+                
                 $message = "Привет, ".$userdata['FirstName'].". Все отлично!";
             }
         } else {

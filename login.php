@@ -15,13 +15,14 @@
 						<p>Войти в личный кабинет</p><br><br>
 						<div id="success">
 							<?php if (isset($_COOKIE['username'])){
-							echo "Привет, <strong>".$login."</strong> | <a href='logout'>Выход</a><br>"
+							echo "Привет, <strong>".$_COOKIE['username']."</strong> | <a href='users/volunteers/logoutVolunteer.php'>Выход</a><br>"
 							;}
 							else{
+
 							echo '
 							<table>
 
- 						    <form action="users/login.php" method="POST">
+ 						    <form action="users/volunteers/loginVolunteer.php" method="POST">
 						    <tr>
 						    <td>Email:</td>
 						    <td><input type="text" name="email" ></td>
@@ -31,9 +32,10 @@
 						    <td>Пароль:</td>
 						    <td><input type="password" name="password" ></td>
 						    </tr>
-						    </form>
+						    	
 						    </table>
-							<td colspan="2"><input class="plain button red" type="button" value="Войти" name="login" ></td>
+							<td colspan="2"><input class="plain button red" type="submit" value="Войти" name="submitlogin" ></td>
+						    </form>
 							<a href="registration">Регистрация</a>'
 							;}
 							?>

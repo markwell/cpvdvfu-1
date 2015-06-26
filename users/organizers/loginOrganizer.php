@@ -1,5 +1,4 @@
 ﻿<?php
-
 	include_once $_SERVER['DOCUMENT_ROOT']."/cpvdvfu/system/bd.php";
 	function checkAndAuthUser($login, $password)
 	{
@@ -18,8 +17,8 @@
 	    # Вытаскиваем из БД запись, у которой логин равняеться введенному
 	    $password = md5($password);//шифруем пароль
 
-	    $volunteer = mysql_query("SELECT OrganizerID, Password FROM Organizers WHERE Email='$login'");
-	    $data = mysql_fetch_array($volunteer);
+	    $query = mysql_query("SELECT OrganizerID, Password FROM Organizers WHERE Email='$login'");
+	    $data = mysql_fetch_array($query);
 
 	    $ID = $data['OrganizerID'];
 	    
@@ -33,9 +32,9 @@
            	$result = mysql_query($query);
 
 	        # Ставим куки
-	        setcookie("id", $ID, time() + 60 * 60 * 24 * 30);
-	        setcookie("hash", $hash, time() + 60 * 60 * 24 * 30);
-	        setcookie("username", $login, time() + 60 * 60 * 24 * 30);
+	        setcookie("id", $ID, time() + 60 * 60 * 24 * 30, "/", "localhost"); //аргумент "localhost" говорит нам что кукисы будут сохранятся в домене localhost
+	        setcookie("hash", $hash, time() + 60 * 60 * 24 * 30, "/", "localhost");
+	        setcookie("username", $login, time() + 60 * 60 * 24 * 30, "/", "localhost");
 	        return null;
 	    } else {
 	        
@@ -47,10 +46,11 @@
 	function authUser()
 	{
 	    if (isset($_POST['submitlogin'])) {
+
 	    	
-	        $error = checkAndAuthUser(mb_strtolower(trim($_POST['email'])), $_POST['password']);
+	        $error = checkAndAuthUser(trim($_POST['email']), $_POST['password']);
 	        if (is_null($error)) {
-	            header('Location:/cpvdvfu/users/checkUserOrganizer.php'); //ссылка на страницу проверки пользователя
+	            header('Location:/cpvdvfu/users/organizers/checkUserOrganizer.php'); //ссылка на страницу проверки пользователя
 	        } else {
 				echo $error;
 	        }
